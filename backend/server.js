@@ -3,6 +3,8 @@ import cors from "cors";
 import OpenAI from "openai";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
+import fs from "fs";
+dotenv.config();
 
 const app = express();
 const port = 3010;
@@ -13,22 +15,32 @@ app.use(cors());
 
 app.use(bodyParser.json());
 
-const openAI = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const mockData = JSON.parse(fs.readFileSync("mockResponses.json", "utf8"));
 
-dotenv.config();
+// const openAI = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-app.get("/joke", async (req, res) => {
-  const apiKey = process.env.OPENAI_API_KEY;
-
-  const completion = await openAI.chat.completions.create({
-    messages: [{ role: "user", content: "Tell me a joke" }],
-    model: "gpt-3.5-turbo",
-  });
-
-  const result = completion.choices[0].message.content;
-
-  res.send(result);
+app.post("/joke", async (req, res) => {
+  const userQuery = req.body.input.toLowerCase();
+  const jokeResponse = mockData.jokes.find((joke) =>
+    userQuery.includes(joke.query.toLowerCase())
+  );
+  if (jokeResponse) {
+    res.send(jokeResponse.response);
+  } else {
+    res.send("Sorry, I don't have a joke for that.");
+  }
 });
+// const apiKey = process.env.OPENAI_API_KEY;
+
+// const completion = await openAI.chat.completions.create({
+//   messages: [{ role: "user", content: "Tell me a joke" }],
+//   model: "gpt-3.5-turbo",
+// });
+
+// const result = completion.choices[0].message.content;
+
+// res.send(result);
+// });
 
 app.get("/", (req, res) => {
   res.send("Welcome to the backend!");
