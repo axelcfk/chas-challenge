@@ -38,6 +38,7 @@ export default function FirstPage() {
 
   return (
     <div>
+    <p>test/shanti</p>
       <div className="flex flex-col justify-evenly items-center bg-green-800 w-full rounded-xl md:p-20 p-10 border-solid border-1 border-slate-800">
         <h1 className="text-3xl w-full md:text-5xl pb-10 text-center font-semibold text-slate-200">
           Do you want a joke?
