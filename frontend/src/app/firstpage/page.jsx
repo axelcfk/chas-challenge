@@ -35,30 +35,8 @@ export default function FirstPage() {
   }
 
   return (
-<<<<<<< HEAD
-    <div className="flex flex-col justify-evenly items-center bg-green-800 w-full rounded-xl md:p-20 p-10 border-solid border-1 border-slate-800">
-      <h1 className="text-3xl w-full md:text-5xl pb-10 text-center font-semibold text-slate-200">
-        Want a joke?
-      </h1>
-      <input
-        type="text"
-        className="h-24 text-2xl p-5 rounded-xl bg-slate-50 w-full"
-        placeholder="Ask for a joke here..."
-        value={input}
-        onChange={handleInputChange}
-        disabled={loading}
-      />
-      <button
-        onClick={fetchJoke}
-        className="mt-10 w-1/3 h-10 bg-slate-50 rounded-xl"
-        disabled={loading}
-      >
-        {loading ? "Loading..." : "Send"}
-      </button>
-      {joke && <p className="text-slate-200 mt-5 text-xl">{joke}</p>}
-=======
     <div>
-    <p>test/shanti</p>
+      <p>test/shanti</p>
       <div className="flex flex-col justify-evenly items-center bg-green-800 w-full rounded-xl md:p-20 p-10 border-solid border-1 border-slate-800">
         <h1 className="text-3xl w-full md:text-5xl pb-10 text-center font-semibold text-slate-200">
           Do you want a joke?
@@ -81,7 +59,6 @@ export default function FirstPage() {
           {loading ? "loading..." : "Send"}
         </button>
       </div>
->>>>>>> eb079bf0f37819f11337738009677fc6f59613d0
     </div>
   );
 }
