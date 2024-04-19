@@ -17,6 +17,7 @@ export default function FirstPage() {
       const response = await fetch("http://localhost:3010/joke", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+
         body: JSON.stringify({ input }),
       });
 
@@ -35,28 +36,37 @@ export default function FirstPage() {
   }
 
   return (
-    <div>
-      <p>test/shanti</p>
-      <div className="flex flex-col justify-evenly items-center bg-green-800 w-full rounded-xl md:p-20 p-10 border-solid border-1 border-slate-800">
-        <h1 className="text-3xl w-full md:text-5xl pb-10 text-center font-semibold text-slate-200">
-          Do you want a joke?
-        </h1>
-        {joke ? (
-          <p className="text-slate-200 mt-5 text-xl ">{joke}</p>
-        ) : (
-          <input
-            type="text"
-            className="h-24 text-2xl p-5 rounded-xl bg-slate-50 w-full"
-            placeholder="Ask for a joke here..."
-            value={input}
-            onChange={handleInputChange}
-          />
-        )}
+    <div className="h-screen w-screen">
+      <div className="flex justify-between px-10 md:px-20 pt-10">
+        <p className="text-3xl">logo</p>
+        <p className="text-4xl font-medium">☰</p>
+      </div>
+      <div className=" flex justify-center">
+        <h1 className="text-4xl mt-10 font-semibold">Gratitude</h1>
+      </div>
+
+      <div className="h-full flex flex-col items-start w-full md:px-20 px-10 border-solid border-1 border-slate-800">
+        <h2 className="font-semibold mt-14 mb-5 text-xl">
+          Daily Reflection Prompt
+        </h2>
+        <div className="h-1/2 w-full bg-slate-200 rounded-xl p-5">{joke}</div>
+
+        <input
+          type="text"
+          className="h-16 text-2xl p-5 rounded-xl bg-slate-300 w-full my-5"
+          placeholder="Write here..."
+          value={input}
+          onChange={handleInputChange}
+        />
+
         <button
-          onClick={fetchJoke}
-          className="mt-10 w-1/3 h-10 bg-slate-50 rounded-xl"
+          onClick={() => {
+            fetchJoke();
+            setInput("");
+          }}
+          className="h-16 w-full bg-slate-200 rounded-3xl font-semibold"
         >
-          {loading ? "loading..." : "Send"}
+          {loading ? "loading..." : "Send to gratitude guru"}
         </button>
       </div>
     </div>
