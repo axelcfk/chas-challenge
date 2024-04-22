@@ -64,10 +64,10 @@ export default function FirstPage() {
             fetchJoke();
             setInput("");
           }}
-          disabled={!input.trim()} // Disable button when input is empty or only contains whitespace
+          disabled={!input.trim()}
           className={`text-xl h-16 w-full bg-slate-200 rounded-3xl font-semibold ${
             !input.trim() ? "text-gray-400" : "text-black"
-          }`} // Conditional class to change text color when disabled
+          }`}
         >
           {loading ? "loading..." : "Send to gratitude guru"}
         </button>
