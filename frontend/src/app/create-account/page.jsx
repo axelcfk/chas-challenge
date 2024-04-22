@@ -1,8 +1,48 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 
 export default function CreateAccount() {
+  const [errorMessage, setErrorMessage] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setErrorMessage(""); // Clear previous error messages
+
+    try {
+      const response = await fetch(`http://localhost:3010/users`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        if (
+          response.status === 400 &&
+          data.message === "This user already exists"
+        ) {
+          throw new Error("This user already exists");
+        } else {
+          throw new Error(data.message || "An unexpected error occurred");
+        }
+      }
+
+      console.log("Success:", data);
+      setSuccessMessage("You've successfully created an account!");
+    } catch (error) {
+      console.error(error);
+      setErrorMessage(error.message);
+    }
+  }
+
   return (
     <div className="py-10 px-5 h-screen w-screen flex flex-col justify-evenly">
       <h2 className="text-3xl font-semibold mb-14 text-center">LOGO</h2>
@@ -11,22 +51,35 @@ export default function CreateAccount() {
         <p className="mb-2">Email</p>
         <input
           type="email"
+          onChange={(e) => setUsername(e.target.value)}
+          value={username}
+          required
+          autoFocus
           placeholder="Enter email address"
           style={{ border: "1px solid rgb(148, 163, 184, 0.5)" }}
           className="text-lg h-16 w-full bg-slate-200 rounded-xl font-semibold mb-2 px-5"
         />
         <p className="mb-2">Password</p>
         <input
+          onChange={(e) => setPassword(e.target.value)}
           type="password"
+          value={password}
+          required
           placeholder="Enter password"
           style={{ border: "1px solid rgb(148, 163, 184, 0.5)" }}
-          className="text-lg h-16 w-full bg-slate-200 rounded-xl font-semibold mb-8 px-5"
+          className="text-lg h-16 w-full bg-slate-200 rounded-xl font-semibold mb-10 px-5"
         />
+        {errorMessage !== "" ? (
+          <p className="text-red-800 h-2">{errorMessage}</p>
+        ) : (
+          <p className="h-1"></p>
+        )}
         <button
+          onClick={handleSubmit}
           style={{ border: "1px solid rgb(148, 163, 184, 0.5)" }}
           className="text-xl h-16 w-full bg-slate-50 rounded-full font-semibold"
         >
-          Log in
+          Create account
         </button>{" "}
         <button
           style={{ border: "1px solid rgb(148, 163, 184, 0.5)" }}

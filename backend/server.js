@@ -4,6 +4,9 @@ import OpenAI from "openai";
 import mysql from "mysql2/promise";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
+import bcrypt from "bcrypt";
+import crypto from "crypto";
+
 dotenv.config();
 
 const app = express();
@@ -16,7 +19,12 @@ const pool = mysql.createPool({
   user: "root",
   password: "root",
   database: "health-app",
+  port: 8889,
 });
+
+function generateOTP() {
+  return crypto.randomBytes(16).toString("hex"); // Generera ett OTP med crypto
+}
 
 // help function to make code look nicer
 async function query(sql, params) {
@@ -71,10 +79,14 @@ app.post("/joke", async (req, res) => {
       );
       console.log("userQuerySQLData: ", userQueryAndResponseSQLData[0]);
     } catch (error) {
-      console.error("Error saving user query and ai response to mysql: ", error);
-      return res.status(500).send("Error saving user query and ai response to mysql");
+      console.error(
+        "Error saving user query and ai response to mysql: ",
+        error
+      );
+      return res
+        .status(500)
+        .send("Error saving user query and ai response to mysql");
     }
-
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({
@@ -82,9 +94,76 @@ app.post("/joke", async (req, res) => {
       details: error.message,
     });
   }
-  
-  
+});
 
+app.post("/users", async (req, res) => {
+  const { username, password } = req.body;
+  const saltRounds = 10;
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+  try {
+    const userExists = await query("SELECT * FROM users WHERE username = ?", [
+      username,
+    ]);
+
+    if (userExists.length > 0) {
+      return res
+        .status(400)
+        .json({ message: "This username is already taken" });
+    }
+
+    const insertResult = await query(
+      "INSERT INTO users (username, password) VALUES (?, ?)",
+      [username, hashedPassword]
+    );
+    const userId = insertResult.insertId;
+
+    res
+      .status(201)
+      .json({ message: "User created successfully", userId: userId });
+  } catch (error) {
+    console.error("Error creating user:", error);
+    res.status(500).json({ message: "Error creating user" });
+  }
+});
+
+app.post("/sessions", async (req, res) => {
+  console.log("Login attempt:", req.body);
+
+  const { username, password } = req.body;
+  try {
+    const user = await query(
+      "SELECT id, password FROM users WHERE username = ?",
+      [username]
+    );
+    console.log("User fetch result:", user);
+
+    if (user.length > 0) {
+      const userData = user[0];
+      const passwordIsValid = await bcrypt.compare(password, userData.password);
+      console.log("Password validation result:", passwordIsValid);
+
+      if (passwordIsValid) {
+        const token = generateOTP();
+        console.log("Generated Token:", token);
+
+        await query("INSERT INTO sessions (user_id, token) VALUES (?, ?)", [
+          userData.id,
+          token,
+        ]);
+        res.json({ message: "Login successful", token, userId: userData.id });
+      } else {
+        console.log("Invalid password");
+        res.status(401).json({ message: "Invalid credentials" });
+      }
+    } else {
+      console.log("User not found");
+      res.status(401).json({ message: "User not found" });
+    }
+  } catch (error) {
+    console.error("Error during login:", error);
+    res.status(500).send("Error logging in user");
+  }
 });
 
 app.listen(port, "0.0.0.0", () => {
