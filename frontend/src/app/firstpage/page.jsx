@@ -5,7 +5,7 @@ import { useState } from "react";
 export default function FirstPage() {
   const [joke, setJoke] = useState("");
   const [input, setInput] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   function handleInputChange(e) {
     setInput(e.target.value);
@@ -16,7 +16,7 @@ export default function FirstPage() {
       <div className="loading-indicator ">
         <h3 className="font-semibold text-3xl">Count your blessings </h3>
         <div className="loader m-10"></div>
-        <p className="font-semibold">Loading... Gratitude guru</p>
+        <p className="font-semibold">Loading Gratitude guru ... </p>
       </div>
     );
   }
