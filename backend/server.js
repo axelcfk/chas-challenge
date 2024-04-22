@@ -22,7 +22,19 @@ app.post("/joke", async (req, res) => {
   try {
     const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: userQuery }],
+      messages: [
+        {
+          role: "system",
+          content:
+            "You are a mental health coach only. You should not respond to anything that is not related to mental health, guidence, gratitude and life goals. If the user asks about anything else you should respond with a message explaining that you are not created to answer that question.",
+        },
+        {
+          role: "user",
+          content:
+            userQuery ||
+            "Please provide a short daily reflection, around 100 words, on an aspect of gratitude. Focus on different subjects each time, such as interactions, personal achievements, or everyday blessings.",
+        },
+      ],
     });
 
     console.log("OpenAI API Response:", JSON.stringify(completion, null, 2));
