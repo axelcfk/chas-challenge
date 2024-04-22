@@ -5,7 +5,7 @@ import { useState } from "react";
 export default function ChatPage() {
   const [joke, setJoke] = useState("");
   const [input, setInput] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   function handleInputChange(e) {
     setInput(e.target.value);
