@@ -6,7 +6,7 @@ export default function CreateAccount() {
   return (
     <div className="py-10 px-5 h-screen w-screen flex flex-col justify-evenly">
       <h2 className="text-3xl font-semibold mb-14 text-center">LOGO</h2>
-      <h2 className="text-2xl font-semibold ">Create an account</h2>
+      <h2 className="text-2xl font-semibold text-center">Create an account</h2>
       <div className="flex flex-col ">
         <p className="mb-2">Email</p>
         <input
