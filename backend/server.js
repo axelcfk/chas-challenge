@@ -37,7 +37,7 @@ async function query(sql, params) {
 app.use(cors());
 app.use(bodyParser.json());
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+// const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 app.post("/joke", async (req, res) => {
   //Tar emot input från frontend och storear i userQuery

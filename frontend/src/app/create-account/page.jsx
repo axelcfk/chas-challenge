@@ -74,13 +74,16 @@ export default function CreateAccount() {
         ) : (
           <p className="h-1"></p>
         )}
+        {successMessage && (
+          <p className="text-geen-500 text-xl mt-3">{successMessage}</p>
+        )}
         <button
           onClick={handleSubmit}
           style={{ border: "1px solid rgb(148, 163, 184, 0.5)" }}
           className="text-xl h-16 w-full bg-slate-50 rounded-full font-semibold"
         >
           Create account
-        </button>{" "}
+        </button>
         <button
           style={{ border: "1px solid rgb(148, 163, 184, 0.5)" }}
           className="text-xl h-16 w-full bg-slate-50 rounded-full font-semibold mt-4"
