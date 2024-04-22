@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 
 export default function FirstPage() {
   return (
@@ -13,13 +14,13 @@ export default function FirstPage() {
       </div>
       <div>
         <button className="text-xl h-16 w-full bg-orange-400 text-slate-50 rounded-full font-semibold mb-5 mt-16">
-          Create an account
+          <Link href="create-account">Create an account</Link>
         </button>
         <button
           style={{ border: "1px solid rgb(148, 163, 184, 0.5)" }}
           className="text-xl h-16 w-full bg-slate-100 rounded-full font-semibold"
         >
-          Log in
+          <Link href="login">Log in</Link>
         </button>
       </div>
     </div>
