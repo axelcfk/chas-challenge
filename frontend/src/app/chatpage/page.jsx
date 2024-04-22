@@ -5,7 +5,7 @@ import { useState } from "react";
 export default function ChatPage() {
   const [joke, setJoke] = useState("");
   const [input, setInput] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   function handleInputChange(e) {
     setInput(e.target.value);
@@ -62,7 +62,7 @@ export default function ChatPage() {
             <h2 className="font-semibold mt-14 mb-5 text-xl">
               Daily Reflection Prompt
             </h2>
-            <div className="h-1/2 w-full bg-slate-205 rounded-xl p-5 border-2 border-slate-500">
+            <div className="h-1/3 w-full bg-slate-205 rounded-xl p-5 border-2 border-slate-500">
               {joke}
             </div>
 

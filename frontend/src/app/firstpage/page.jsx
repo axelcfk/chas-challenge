@@ -2,7 +2,7 @@
 
 export default function FirstPage() {
   return (
-    <div className="p-10 h-screen w-screen">
+    <div className="py-10 px-5 h-screen w-screen">
       <h1 className="text-3xl font-semibold mb-14 text-center">LOGO</h1>
       <div className="h-1/2 w-full flex justify-center">
         <img

@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Login() {
   return (
-    <div className="p-10 h-screen w-screen flex flex-col justify-evenly">
+    <div className="py-10 px-5 h-screen w-screen flex flex-col justify-evenly">
       <h2 className="text-3xl font-semibold mb-14 text-center">LOGO</h2>
       <h2 className="text-2xl font-semibold text-center">Login</h2>
       <div className="flex flex-col ">
