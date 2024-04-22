@@ -113,6 +113,12 @@ export default function CreateAccount() {
             <span className="ml-4">Continue with Google</span>
           </div>
         </button>{" "}
+        <div className="flex mt-10">
+          <p>Do you already have an account?</p>
+          <Link href={"/login"} className="underline ml-2">
+            Log in here
+          </Link>
+        </div>
       </div>
       <div className=" ">
         <div className="flex justify-center items-center mt-20 mb-5">
