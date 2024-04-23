@@ -19,7 +19,7 @@ const pool = mysql.createPool({
   user: "root",
   password: "root",
   database: "health-app",
-  port: 8889,
+  port: 3306,
 });
 
 function generateOTP() {
